@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
 public class MultipartOutputStream extends OutputStream {
 
 	private static final String CONTENT_DISPOSITION_TEMPLATE = "Content-Disposition: form-data; name=\"{}\"\r\n";
-	private static final String CONTENT_DISPOSITION_FILE_TEMPLATE = "Content-Disposition: form-data; name=\"{}\"; filename=\"{}\"\r\n";
+	private static final String CONTENT_DISPOSITION = "Content-Disposition: form-data; name=\"{}\"; filename=\"{}\"\r\n";
 
 	private static final String CONTENT_TYPE_FILE_TEMPLATE = "Content-Type: {}\r\n";
 
@@ -142,7 +142,7 @@ public class MultipartOutputStream extends OutputStream {
 			write(StrUtil.format(CONTENT_DISPOSITION_TEMPLATE, formFieldName));
 		} else {
 			// Content-Disposition: form-data; name="参数名"; filename="文件名"[换行]
-			write(StrUtil.format(CONTENT_DISPOSITION_FILE_TEMPLATE, formFieldName, fileName));
+			write(StrUtil.format(CONTENT_DISPOSITION, formFieldName, fileName));
 		}
 
 		// Content-Type

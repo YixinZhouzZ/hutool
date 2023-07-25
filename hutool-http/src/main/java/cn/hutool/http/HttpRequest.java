@@ -22,6 +22,7 @@ import cn.hutool.http.body.MultipartBody;
 import cn.hutool.http.body.RequestBody;
 import cn.hutool.http.body.ResourceBody;
 import cn.hutool.http.cookie.GlobalCookieManager;
+import cn.hutool.http.entity.HttpResponseEntity;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
@@ -1049,8 +1050,17 @@ public class HttpRequest extends HttpBase<HttpRequest> {
 	 * @return this
 	 */
 	public HttpResponse execute(boolean isAsync) {
-		return doExecute(isAsync, config.requestInterceptors, config.responseInterceptors);
+		return doExecute(isAsync, getRequestInterceptors(), getResponseInterceptors());
 	}
+
+	public HttpInterceptor.Chain<HttpResponse> getResponseInterceptors() {
+		return config.responseInterceptors;
+	}
+
+	public HttpInterceptor.Chain<HttpRequest> getRequestInterceptors() {
+		return config.requestInterceptors;
+	}
+
 
 	/**
 	 * 执行Request请求后，对响应内容后续处理<br>
@@ -1193,7 +1203,13 @@ public class HttpRequest extends HttpBase<HttpRequest> {
 
 		// 获取响应
 		if (null == httpResponse) {
-			httpResponse = new HttpResponse(this.httpConnection, this.config, this.charset, isAsync, isIgnoreResponseBody());
+			HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+			httpResponseEntity.setHttpConnection(this.httpConnection);
+			httpResponseEntity.setConfig(this.config);
+			httpResponseEntity.setCharset(this.charset);
+			httpResponseEntity.setAsync(isAsync);
+			httpResponseEntity.setIgnoreBody(isIgnoreResponseBody());
+			httpResponse = new HttpResponse(httpResponseEntity);
 		}
 
 		// 拦截响应

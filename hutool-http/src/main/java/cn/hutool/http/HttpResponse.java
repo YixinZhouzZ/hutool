@@ -13,6 +13,7 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.cookie.GlobalCookieManager;
+import cn.hutool.http.entity.HttpResponseEntity;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -73,12 +74,12 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * @param isIgnoreBody   是否忽略读取响应体
 	 * @since 3.1.2
 	 */
-	protected HttpResponse(HttpConnection httpConnection, HttpConfig config, Charset charset, boolean isAsync, boolean isIgnoreBody) {
-		this.httpConnection = httpConnection;
-		this.config = config;
-		this.charset = charset;
-		this.isAsync = isAsync;
-		this.ignoreBody = isIgnoreBody;
+	protected HttpResponse(HttpResponseEntity httpConnectionEntity) {
+		this.httpConnection = httpConnectionEntity.getHttpConnection();
+		this.config = httpConnectionEntity.getConfig();
+		this.charset = httpConnectionEntity.getCharset();
+		this.isAsync = httpConnectionEntity.isAsync();
+		this.ignoreBody = httpConnectionEntity.isIgnoreBody();
 		initWithDisconnect();
 	}
 

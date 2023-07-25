@@ -789,6 +789,11 @@ public class HttpUtil {
 			charset = CharsetUtil.CHARSET_UTF_8;
 		}
 		String content = new String(contentBytes, charset);
+		content = getContent(contentBytes, charset, isGetCharsetFromContent, content);
+		return content;
+	}
+
+	public static String getContent(byte[] contentBytes, Charset charset, boolean isGetCharsetFromContent, String content) {
 		if (isGetCharsetFromContent) {
 			final String charsetInContentStr = ReUtil.get(META_CHARSET_PATTERN, content, 1);
 			if (StrUtil.isNotBlank(charsetInContentStr)) {
@@ -811,15 +816,15 @@ public class HttpUtil {
 		return content;
 	}
 
-	/**
-	 * 根据文件扩展名获得MimeType
-	 *
-	 * @param filePath     文件路径或文件名
-	 * @param defaultValue 当获取MimeType为null时的默认值
-	 * @return MimeType
-	 * @see FileUtil#getMimeType(String)
-	 * @since 4.6.5
-	 */
+		/**
+		 * 根据文件扩展名获得MimeType
+		 *
+		 * @param filePath     文件路径或文件名
+		 * @param defaultValue 当获取MimeType为null时的默认值
+		 * @return MimeType
+		 * @see FileUtil#getMimeType(String)
+		 * @since 4.6.5
+		 */
 	public static String getMimeType(String filePath, String defaultValue) {
 		return ObjectUtil.defaultIfNull(getMimeType(filePath), defaultValue);
 	}

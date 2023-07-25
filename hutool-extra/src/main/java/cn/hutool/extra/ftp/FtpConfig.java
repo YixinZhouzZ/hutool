@@ -110,11 +110,6 @@ public class FtpConfig implements Serializable {
 		return port;
 	}
 
-	public FtpConfig setPort(int port) {
-		this.port = port;
-		return this;
-	}
-
 	public String getUser() {
 		return user;
 	}
@@ -128,10 +123,6 @@ public class FtpConfig implements Serializable {
 		return password;
 	}
 
-	public FtpConfig setPassword(String password) {
-		this.password = password;
-		return this;
-	}
 
 	public Charset getCharset() {
 		return charset;
@@ -155,26 +146,13 @@ public class FtpConfig implements Serializable {
 		return soTimeout;
 	}
 
-	public FtpConfig setSoTimeout(long soTimeout) {
-		this.soTimeout = soTimeout;
-		return this;
-	}
-
 	public String getServerLanguageCode() {
 		return serverLanguageCode;
 	}
 
-	public FtpConfig setServerLanguageCode(String serverLanguageCode) {
-		this.serverLanguageCode = serverLanguageCode;
-		return this;
-	}
 
 	public String getSystemKey() {
 		return systemKey;
 	}
 
-	public FtpConfig setSystemKey(String systemKey) {
-		this.systemKey = systemKey;
-		return this;
-	}
 }
